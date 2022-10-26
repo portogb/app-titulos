@@ -1,31 +1,33 @@
 import React, {useState} from 'react';
-import {FlatList, View, Text, StyleSheet, Image} from 'react-native';
-import {showImage} from "./images.js";
+import {FlatList, View, Text, StyleSheet, Image, ImageBackground} from 'react-native';
  
 const dummyArray = [  
-  {id: '1', value: 'Flamengo'},
-  {id: '2', value: 'Vasco'},
-  {id: '3', value: 'Fluminense'},
-  {id: '4', value: 'Botafogo'},
+  {id: '1', value: 'Flamengo', image: require("./assets/Flamengo.svg.webp")},
+  {id: '2', value: 'Vasco', image: require("./assets/Vasco.png")},
+  {id: '3', value: 'Fluminense', image: require("./assets/flu.svg.png")},
+  {id: '4', value: 'Botafogo', image: require("./assets/Botafogo.svg.png")},
 ];
  
 const App = () => {
   const [listItems, setListItems] = useState(dummyArray);
 
-  let selectedTeam = showImage({item});
-
   const ItemView = ({item}) => {
     return (
       // FlatList Item
       <View>
-        <Image source={require("./assets/maracana.jpg")} style={{height:150, width:400}}
-          selectedTeam
-        />
+
+        <ImageBackground source={require("./assets/maracana.jpg")} resizeMode='center' style={styles.imageBackground}>
+          <Image
+            source={item.image}
+            style={styles.imageStyle}
+          />
+        
         <Text
           style={styles.item}
           onPress={() => getItem(item)}>
           {item.value}
         </Text>
+        </ImageBackground>
       </View>
     );
   };
@@ -79,15 +81,19 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 10,
-    fontSize: 18,
-     marginVertical: 18,
-    marginHorizontal: 26,
-    backgroundColor: '#bbb',
+    fontSize: 30,
     height: 44,
-    color: '#000',
+    color: '#fff',
   },
-  backgroudTeam:{
-    
+  imageStyle:{
+    width: 60, 
+    height: 80,
+  },
+  imageBackground:{
+    alignItems:"center",
+    flexDirection:"row",
+    width:400, 
+    height: 200,
   }
 });
  
